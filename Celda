@@ -1,1 +1,84 @@
+package com.example.battleship;
+
+import android.content.Context;
+
+import androidx.annotation.NonNull;
+
+public class Celda extends androidx.appcompat.widget.AppCompatImageButton{
+
+    private int pos_x, pos_y;
+    private boolean sePuedeColocar;
+
+    public Celda(@NonNull Context context) {
+        super(context);
+        this.setImageResource(R.mipmap.ic_launcher);
+        this.setScaleType(ScaleType.FIT_XY);
+        this.setAdjustViewBounds(false);
+        this.setPadding(0,0,0,0);
+        sePuedeColocar=true;
+    }
+
+    public Celda putPosition(int x, int y){
+        this.pos_x =x;
+        this.pos_y =y;
+
+        return this;
+    }
+
+    public boolean isSePuedeColocar() {
+        return sePuedeColocar;
+    }
+
+    public void setSePuedeColocar(boolean sePuedeColocar) {
+        this.sePuedeColocar = sePuedeColocar;
+    }
+
+    public int getPos_x() {
+        return pos_x;
+    }
+
+    public void setPos_x(int pos_x) {
+        this.pos_x = pos_x;
+    }
+
+
+    public int getPos_y() {
+        return pos_y;
+    }
+
+    public void setPos_y(int pos_y) {
+        this.pos_y = pos_y;
+    }
+
+    enum TipoCelda{
+        tapado,agua,barco
+    }
+
+    public boolean comprobarColocacion(Barco barco){
+        boolean temp=true;
+        if(sePuedeColocar){
+            if (barco.getOrientacion()== Barco.Orientacion.vertical){
+                if(barco.getPos_y()>=Datos.getTableroJugador()[0].length-1)
+                    temp=false;
+                if(barco.getPos_y()>=Datos.getTableroJugador()[0].length-2)
+                    temp=false;
+                if(barco.getPos_y()>=Datos.getTableroJugador()[0].length-3)
+                    temp=false;
+            }
+            else{
+                if(barco.getPos_x()>=Datos.getTableroJugador().length-1)
+                    temp=false;
+                if(barco.getPos_x()>=Datos.getTableroJugador().length-2)
+                    temp=false;
+                if(barco.getPos_x()>=Datos.getTableroJugador().length-3)
+                    temp=false;
+            }
+        }
+        else
+            temp=false;
+
+        return temp;
+    }
+
+}
 
