@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FaseColocarBarcos">
+    tools:context=".ColocarBarcos">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -30,56 +30,101 @@
             android:layout_width="match_parent"
             android:layout_height="55dp" />
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="288dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                tools:layout_editor_absoluteY="271dp">
 
-                <TableRow
+                <TableLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="10dp">
+                    android:layout_height="match_parent">
 
-                    <ImageButton
-                        android:id="@+id/imageButton4"
+                    <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:adjustViewBounds="false"
-                        tools:src="@tools:sample/avatars" />
-                </TableRow>
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="10dp">
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingBottom="10dp">
+                        <ImageButton
+                            android:id="@+id/imageButton4"
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp"
+                            android:adjustViewBounds="false"
+                            tools:ignore="SpeakableTextPresentCheck"
+                            tools:src="@tools:sample/avatars" />
+                    </TableRow>
 
-                    <ImageButton
-                        android:id="@+id/imageButton5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="80dp"
-                        tools:src="@tools:sample/backgrounds/scenic" />
-                </TableRow>
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingBottom="10dp">
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingBottom="10dp">
+                        <ImageButton
+                            android:id="@+id/imageButton5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="80dp"
+                            tools:ignore="SpeakableTextPresentCheck"
+                            tools:src="@tools:sample/backgrounds/scenic" />
+                    </TableRow>
 
-                    <ImageButton
-                        android:id="@+id/imageButton6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="80dp"
-                        tools:src="@tools:sample/avatars" />
-                </TableRow>
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingBottom="10dp">
 
-            </TableLayout>
-        </LinearLayout>
+                        <ImageButton
+                            android:id="@+id/imageButton6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="80dp"
+                            tools:ignore="SpeakableTextPresentCheck"
+                            tools:src="@tools:sample/avatars" />
+                    </TableRow>
+
+                </TableLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/linearLayout"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/nBarco2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/nBarco3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="68dp"
+                    android:layout_marginBottom="68dp"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/nBarco4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="40dp"
+                    android:text="TextView" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
