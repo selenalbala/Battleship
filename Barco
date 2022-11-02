@@ -1,1 +1,131 @@
+package com.example.battleship;
 
+import android.content.Context;
+
+import java.util.LinkedList;
+import java.util.List;
+
+public class Barco{
+    private int pos_x;
+    private int pos_y;
+    private List<Barco> vecinosBarco;
+    private TipoBarco tipoBarco;
+    private Orientacion orientacion;
+    private boolean golpeado;
+    private boolean isColocado;
+
+    public Barco(){
+        vecinosBarco=new LinkedList<>();
+        orientacion=Orientacion.horizontal;
+        golpeado=false;
+        isColocado=false;
+    }
+
+    public Barco putPosition(int x, int y){
+        this.pos_x=x;
+        this.pos_y=y;
+        this.isColocado=true;
+
+        return this;
+    }
+
+    public List<Barco> getVecinosBarco() {
+        return vecinosBarco;
+    }
+
+    public TipoBarco getTipoBarco() {
+        return tipoBarco;
+    }
+
+    public Orientacion getOrientacion() {
+        return orientacion;
+    }
+
+    public boolean isGolpeado() {
+        return golpeado;
+    }
+
+    public boolean isColocado() {
+        return isColocado;
+    }
+
+    public int getPos_x() {
+        return pos_x;
+    }
+
+    public int getPos_y() {
+        return pos_y;
+    }
+
+    enum TipoBarco{
+        t1x2,t1x3,t1x4
+    }
+
+    public void setPos_x(int pos_x) {
+        this.pos_x = pos_x;
+    }
+
+    public void setPos_y(int pos_y) {
+        this.pos_y = pos_y;
+    }
+
+    public void setVecinosBarco(List<Barco> vecinosBarco) {
+        this.vecinosBarco = vecinosBarco;
+    }
+
+    public Barco setTipoBarco(TipoBarco tipoBarco) {
+        this.tipoBarco = tipoBarco;
+
+        return this;
+    }
+
+    public void setOrientacion(Orientacion orientacion) {
+        this.orientacion = orientacion;
+    }
+
+    public void setGolpeado(boolean golpeado) {
+        this.golpeado = golpeado;
+    }
+
+    public void setColocado(boolean colocado) {
+        isColocado = colocado;
+    }
+
+    enum Orientacion{
+        vertical,horizontal
+    }
+
+    public void setOrientacion(){
+        if (orientacion==Orientacion.horizontal)
+            orientacion=Orientacion.vertical;
+
+        else
+            orientacion=Orientacion.horizontal;
+    }
+
+    public void colocar(boolean jugador){
+
+        if(orientacion==Orientacion.horizontal) {
+            vecinosBarco.add(new Barco().putPosition(pos_x, pos_y + 1));
+            if(tipoBarco==TipoBarco.t1x3 || tipoBarco==TipoBarco.t1x4)
+                vecinosBarco.add(new Barco().putPosition(pos_x,pos_y+2));
+            if(tipoBarco==TipoBarco.t1x4)
+                vecinosBarco.add(new Barco().putPosition(pos_x,pos_y+3));
+        }
+
+        else {
+            vecinosBarco.add(new Barco().putPosition(pos_x + 1, pos_y));
+            if(tipoBarco==TipoBarco.t1x3 || tipoBarco==TipoBarco.t1x4)
+                vecinosBarco.add(new Barco().putPosition(pos_x+2,pos_y));
+            if(tipoBarco==TipoBarco.t1x4)
+                vecinosBarco.add(new Barco().putPosition(pos_x+3,pos_y));
+        }
+        vecinosBarco.add(this);
+
+        if(jugador)
+            Datos.colocarBarcosJugador(vecinosBarco);
+        else
+            Datos.colocarBarcosIA(vecinosBarco);
+
+    }
+}
