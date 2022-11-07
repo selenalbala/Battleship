@@ -50,10 +50,6 @@ public class Celda extends androidx.appcompat.widget.AppCompatImageButton{
         this.pos_y = pos_y;
     }
 
-    enum TipoCelda{
-        tapado,agua,barco
-    }
-
     public boolean comprobarColocacion(Barco barco){
         boolean temp=true;
         if(sePuedeColocar){
@@ -79,6 +75,35 @@ public class Celda extends androidx.appcompat.widget.AppCompatImageButton{
 
         return temp;
     }
+        enum Tipo{
+        Agua, Seleccionado, Tapado,
+        Barco12_p1H, Barco12_p2H, Barco13_p1H, Barco13_p2H, Barco13_p3H, Barco14_p1H, Barco14_p2H, Barco14_p3H, Barco14_p4H,
+        Barco12_p1V, Barco12_p2V, Barco13_p1V, Barco13_p2V, Barco13_p3V, Barco14_p1V, Barco14_p2V, Barco14_p3V, Barco14_p4V
+    }
+
+    public void cambiaTipo(Tipo tipoNuevo){ // introduces un tipo nuevo, si es igual no hace nada. Si es distinto, cambia la imagen.
+        if(tipoActual == tipoNuevo) return;
+        tipoActual=tipoNuevo;
+        switch(tipoActual){
+            case Barco12_p1H: this.setImageResource(R.mipmap.barco12_p1); break;
+            case Barco12_p2H: this.setImageResource(R.mipmap.barco12_p2); break;
+            case Barco13_p1H: this.setImageResource(R.mipmap.barco13_p1); break;
+            case Barco13_p2H: this.setImageResource(R.mipmap.barco13_p2); break;
+            case Barco13_p3H: this.setImageResource(R.mipmap.barco13_p3); break;
+            case Barco14_p1H: this.setImageResource(R.mipmap.barco14_p1); break;
+            case Barco14_p2H: this.setImageResource(R.mipmap.barco14_p2); break;
+            case Barco14_p3H: this.setImageResource(R.mipmap.barco14_p3); break;
+            case Barco14_p4H: this.setImageResource(R.mipmap.barco14_p4); break;
+            case Barco12_p1V: this.setImageResource(R.mipmap.barco12_p1); break;
+            case Barco12_p2V: this.setImageResource(R.mipmap.barco12_p2); break;
+            case Barco13_p1V: this.setImageResource(R.mipmap.barco13_p1); break;
+            case Barco13_p2V: this.setImageResource(R.mipmap.barco13_p2); break;
+            case Barco13_p3V: this.setImageResource(R.mipmap.barco13_p3); break;
+            case Barco14_p1V: this.setImageResource(R.mipmap.barco14_p1); break;
+            case Barco14_p2V: this.setImageResource(R.mipmap.barco14_p2); break;
+            case Barco14_p3V: this.setImageResource(R.mipmap.barco14_p3); break;
+            case Barco14_p4V: this.setImageResource(R.mipmap.barco14_p4); break;
+            default: Log.e("Clase Celda","Hay un error en la función cambiaTipo");
 
 }
 
