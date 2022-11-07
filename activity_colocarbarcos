@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ColocarBarcos">
+    android:background="@color/azuloscuro"
+    tools:context=".FaseColocarBarcos">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -14,15 +15,17 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:orientation="vertical"
+        android:weightSum="100"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:id="@+id/verticalLayout"
+            android:id="@+id/tableroColocarBarcos"
             android:layout_width="match_parent"
-            android:layout_height="373dp"
+            android:layout_height="0dp"
+            android:layout_weight="55"
             android:background="@mipmap/agua"
             android:orientation="vertical">
 
@@ -30,98 +33,104 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="55dp" />
+            android:layout_height="0dp"
+            android:layout_weight="5" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="0dp"
+            android:layout_weight="40"
+            android:orientation="horizontal"
+            android:weightSum="6">
 
             <LinearLayout
-                android:id="@+id/linearLayout"
-                android:layout_width="288dp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_weight="5"
+                android:orientation="horizontal">
 
                 <TableLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:weightSum="3">
 
                     <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:paddingBottom="10dp">
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
 
                         <ImageButton
-                            android:id="@+id/imageButton4"
-                            android:layout_width="match_parent"
-                            android:layout_height="80dp"
-                            android:adjustViewBounds="false"
-                            tools:ignore="SpeakableTextPresentCheck"
-                            tools:src="@tools:sample/avatars" />
+                            android:id="@+id/barco_12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:srcCompat="@tools:sample/backgrounds/scenic" />
                     </TableRow>
 
                     <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:paddingBottom="10dp">
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
 
                         <ImageButton
-                            android:id="@+id/imageButton5"
+                            android:id="@+id/barco_13"
                             android:layout_width="wrap_content"
-                            android:layout_height="80dp"
-                            tools:ignore="SpeakableTextPresentCheck"
-                            tools:src="@tools:sample/backgrounds/scenic" />
+                            android:layout_height="wrap_content"
+                            tools:srcCompat="@tools:sample/backgrounds/scenic" />
                     </TableRow>
 
                     <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:paddingBottom="10dp">
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
 
                         <ImageButton
-                            android:id="@+id/imageButton6"
+                            android:id="@+id/barco_14"
                             android:layout_width="wrap_content"
-                            android:layout_height="80dp"
-                            tools:ignore="SpeakableTextPresentCheck"
-                            tools:src="@tools:sample/avatars" />
+                            android:layout_height="wrap_content"
+                            tools:srcCompat="@tools:sample/backgrounds/scenic" />
                     </TableRow>
 
                 </TableLayout>
-
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="91dp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:weightSum="6">
 
                 <TextView
                     android:id="@+id/nBarco2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
-                    android:text="TextView" />
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:text="Barco 2"
+                    android:textAlignment="center"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/nBarco3"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="68dp"
-                    android:layout_marginBottom="68dp"
-                    android:text="TextView" />
+                    android:layout_weight="2"
+                    android:text="Barco 3"
+                    android:textAlignment="center"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/nBarco4"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="40dp"
-                    android:text="TextView" />
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:text="Barco 4"
+                    android:textAlignment="center"
+                    android:textSize="16sp" />
             </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>
