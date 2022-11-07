@@ -20,8 +20,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:id="@+id/verticalLayout"
             android:layout_width="match_parent"
             android:layout_height="373dp"
+            android:background="@mipmap/agua"
             android:orientation="vertical">
 
         </LinearLayout>
@@ -30,16 +32,16 @@
             android:layout_width="match_parent"
             android:layout_height="55dp" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="288dp"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                tools:layout_editor_absoluteY="271dp">
+                android:orientation="vertical">
 
                 <TableLayout
                     android:layout_width="match_parent"
@@ -93,14 +95,10 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_width="91dp"
+                android:layout_height="match_parent"
                 android:gravity="center"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/linearLayout"
-                app:layout_constraintTop_toTopOf="parent">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/nBarco2"
@@ -124,7 +122,7 @@
                     android:layout_marginBottom="40dp"
                     android:text="TextView" />
             </LinearLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
     </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
