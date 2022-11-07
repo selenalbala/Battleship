@@ -77,7 +77,7 @@ public class Celda extends androidx.appcompat.widget.AppCompatImageButton{
     }
     
     enum Tipo{
-        Agua, Seleccionado, Tapado,
+        Cruz, Seleccionado,
         Barco12_p1H, Barco12_p2H, Barco13_p1H, Barco13_p2H, Barco13_p3H, Barco14_p1H, Barco14_p2H, Barco14_p3H, Barco14_p4H,
         Barco12_p1V, Barco12_p2V, Barco13_p1V, Barco13_p2V, Barco13_p3V, Barco14_p1V, Barco14_p2V, Barco14_p3V, Barco14_p4V
 }
@@ -104,6 +104,8 @@ public class Celda extends androidx.appcompat.widget.AppCompatImageButton{
             case Barco14_p2V: this.setImageResource(R.mipmap.barco14_p2); break;
             case Barco14_p3V: this.setImageResource(R.mipmap.barco14_p3); break;
             case Barco14_p4V: this.setImageResource(R.mipmap.barco14_p4); break;
+            case Cruz: this.setImageResource(R.mipmap.cruz); break;
+            case Seleccionado: this.setImageResource(R.mipmap.seleccionado); break;
             default: Log.e("Clase Celda","Hay un error en la función cambiaTipo");
 
 }
