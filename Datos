@@ -11,138 +11,95 @@ import java.util.List;
 import java.util.Random;
 
 public class Datos {
-    private static boolean[][] tableroJugador;
-    private static boolean[][] tableroIA;
     private static boolean esJugador;
-    private static int contadorCasillasBarcoJugador;
-    private static int contadorCasillasBarcoIA;
-    private static View[][]botones;
-    private static View[][]botonesColocar;
+    private static View[][] botones;
+    private static Celda[][] botonesColocar;
+    private static Celda[][] botonesColocarIA;
     private static List<Barco> barcosJugador;
     private static List<Barco> barcosIA;
+    private static Celda[][] tableroIA;
+    private static Celda[][] tableroJugador;
 
-    public static boolean[][] getTableroJugador() {
-        return tableroJugador;
+    public static Celda[][] getBotonesColocar(){
+        return botonesColocar;
     }
 
-    public static void setTableroJugador(boolean[][] tableroJugador) {
-        Datos.tableroJugador = tableroJugador;
+    public static Celda[][] getBotonesColocarIA(){
+        return botonesColocarIA;
     }
 
-    public static boolean[][] getTableroIA() {
+    public static List<Barco> getBarcosJugador(){
+        return barcosJugador;
+    }
+    public static List<Barco> getBarcosIA(){
+        return barcosIA;
+    }
+
+    public static Celda[][]getTableroIA(){
         return tableroIA;
     }
 
-    public static void generarFaseColocacion(){
-        generar();
-        botonesColocar=new View[10][10];
-        barcosJugador= new LinkedList<>();
-        barcosIA=new LinkedList<>();
-
-        barcosJugador.add(new Barco().setTipoBarco(Barco.TipoBarco.t1x2));
-        barcosJugador.add(new Barco().setTipoBarco(Barco.TipoBarco.t1x2));
-        barcosJugador.add(new Barco().setTipoBarco(Barco.TipoBarco.t1x3));
-        barcosJugador.add(new Barco().setTipoBarco(Barco.TipoBarco.t1x3));
-        barcosJugador.add(new Barco().setTipoBarco(Barco.TipoBarco.t1x4));
-
-        colocarBarcosIA();
-    }
-    public static void colocarBarcosIA(){
-        barcosIA.add(new Barco().setTipoBarco(Barco.TipoBarco.t1x2));
-        barcosIA.add(new Barco().setTipoBarco(Barco.TipoBarco.t1x2));
-        barcosIA.add(new Barco().setTipoBarco(Barco.TipoBarco.t1x3));
-        barcosIA.add(new Barco().setTipoBarco(Barco.TipoBarco.t1x3));
-        barcosIA.add(new Barco().setTipoBarco(Barco.TipoBarco.t1x4));
-
-        Iterator<Barco> iterador=barcosIA.iterator();
-        Random rnd=new Random();
-        while(iterador.hasNext()){
-            boolean isColocado=false;
-            Barco barco=iterador.next();
-
-            while(!isColocado){
-                barco.putPosition(rnd.nextInt(10), rnd.nextInt(10));
-                if(tableroIA[0][0]) Log.d("Colocado","1: "+barcosIA.indexOf(barco));
-                if(rnd.nextInt(2)==1)
-                    barco.setOrientacion();
-                if(tableroIA[0][0]) Log.d("Colocado","2: "+barcosIA.indexOf(barco));
-                if(!tableroIA[barco.getPos_x()][barco.getPos_y()])
-                    if (barco.getOrientacion() == Barco.Orientacion.vertical){
-                        if (barco.getPos_x()<9 && !tableroIA[barco.getPos_x() + 1][barco.getPos_y()])
-                            if (barco.getTipoBarco() == Barco.TipoBarco.t1x3 || barco.getTipoBarco() == Barco.TipoBarco.t1x4) {
-                                if (barco.getPos_x()<8 && !tableroIA[barco.getPos_x() + 2][barco.getPos_y()]) {
-                                    if (barco.getTipoBarco() == Barco.TipoBarco.t1x4) {
-                                        if (barco.getPos_x()<7 && !tableroIA[barco.getPos_x() + 3][barco.getPos_y()]){
-                                            barco.colocar(false);
-                                            isColocado=true;
-                                        }
-                                    } else {
-                                        barco.colocar(false);
-                                        isColocado=true;
-                                    }
-                                }
-                            } else {
-                                barco.colocar(false);
-                                isColocado=true;
-                            }
-                        if(tableroIA[0][0]) Log.d("Colocado","3if: "+barcosIA.indexOf(barco));
-                    }
-                else{
-                        if (barco.getPos_y()<9 && !tableroIA[barco.getPos_x()][barco.getPos_y()+ 1])
-                            if (barco.getTipoBarco() == Barco.TipoBarco.t1x3 || barco.getTipoBarco() == Barco.TipoBarco.t1x4) {
-                                if (barco.getPos_y()<8 && !tableroIA[barco.getPos_x()][barco.getPos_y() + 2]) {
-                                    if (barco.getTipoBarco() == Barco.TipoBarco.t1x4) {
-                                        if (barco.getPos_y()<7 &&!tableroIA[barco.getPos_x()][barco.getPos_y() + 3]) {
-                                            barco.colocar(false);
-                                            isColocado=true;
-                                        }
-                                    } else {
-                                        barco.colocar(false);
-                                        isColocado=true;
-                                    }
-                                }
-                            } else {
-                                barco.colocar(false);
-                                isColocado=true;
-                            }
-
-                        if(tableroIA[0][0]) Log.d("Colocado","3else: "+barcosIA.indexOf(barco));
-                }
-                if(tableroIA[0][0]) Log.d("Colocado","fin: "+barcosIA.indexOf(barco));
-            }
-        }
+    public static Celda[][]getTableroJugador(){
+        return tableroJugador;
     }
 
     public static void generar(){
-        tableroJugador=new boolean[10][10];
-        tableroIA=new boolean[10][10];
-        for (int i=0;i<tableroIA.length;i++)
-            for(int j=0;j<tableroIA[0].length;j++)
-                tableroIA[i][j]=false;
-        esJugador=true;
-        contadorCasillasBarcoJugador=10;
-        contadorCasillasBarcoIA=10;
-        botones=new View[10][10];
+        botonesColocar=new Celda[10][10];
+        botonesColocarIA=new Celda[10][10];
+        barcosJugador=new LinkedList<>();
+        barcosIA=new LinkedList<>();
+
+        //cambiar luego
+
+        barcosJugador.add(new Barco().setTipoBarco(Barco.TipoBarco.t1x2));
+        barcosJugador.add(new Barco().setTipoBarco(Barco.TipoBarco.t1x2));
+        barcosJugador.add(new Barco().setTipoBarco(Barco.TipoBarco.t1x3));
+        barcosJugador.add(new Barco().setTipoBarco(Barco.TipoBarco.t1x4));
+
+        barcosIA.add(new Barco().setTipoBarco(Barco.TipoBarco.t1x2));
+        barcosIA.add(new Barco().setTipoBarco(Barco.TipoBarco.t1x2));
+        barcosIA.add(new Barco().setTipoBarco(Barco.TipoBarco.t1x3));
+        barcosIA.add(new Barco().setTipoBarco(Barco.TipoBarco.t1x4));
     }
 
-    public static void colocarBarcosJugador(@NonNull List<Barco> listaBarcos){
-        Iterator<Barco> iterador=listaBarcos.iterator();
+    public static void pasarCelda(Celda c, boolean isJugador){
+        if(isJugador)
+            botonesColocar[c.getPos_x()][c.getPos_y()]=c;
+        else
+            botonesColocarIA[c.getPos_x()][c.getPos_y()]=c;
+    }
 
-        while(iterador.hasNext()){
+    public static void colocarBarcosIA(){
+        Random rnd=new Random();
+        Iterator iterator= barcosIA.iterator();
+        while(iterator.hasNext()){
+            Barco barco=(Barco) iterator;
+            if(rnd.nextBoolean())
+                barco.setOrientacion();
 
-            Barco barco=iterador.next();
-            tableroJugador[barco.getPos_x()][barco.getPos_y()]=true;
-
+            while(!botonesColocarIA[rnd.nextInt(botonesColocarIA.length)][rnd.nextInt(botonesColocarIA.length)].colocar(barco,false)){
+            }
         }
+
     }
 
-    public static void colocarBarcosIA(@NonNull List<Barco> listaBarcos){
-        Iterator<Barco> iterador=listaBarcos.iterator();
+    public static void Iniciar(){
+        //TODO REVISAR
+        tableroJugador=botonesColocar;
+        tableroIA=botonesColocarIA;
+    }
 
-        while(iterador.hasNext()){
-            Barco barco=iterador.next();
-            tableroIA[barco.getPos_x()][barco.getPos_y()]=true;
 
+    public static void comprobarBarcoHundido(Celda celda, boolean isJugador) {
+        if(isJugador){
+            for(Barco barco:barcosIA){
+                if(barco.getCeldaInicio().equals(celda))
+
+                for(Celda celdaBarco:barco.getCasillasVecinas()){
+                    //TODO ACABAR
+
+                }
+            }
         }
     }
 }
