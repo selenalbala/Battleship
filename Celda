@@ -1,26 +1,28 @@
-package com.example.battleship;
-
-import android.content.Context;
-
 import androidx.annotation.NonNull;
 
-public class Celda extends androidx.appcompat.widget.AppCompatImageButton{
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
+public class Celda extends androidx.appcompat.widget.AppCompatImageButton {
 
     private int pos_x, pos_y;
     private boolean sePuedeColocar;
+    private Tipo tipoActual;
 
     public Celda(@NonNull Context context) {
         super(context);
         this.setImageResource(R.mipmap.ic_launcher);
         this.setScaleType(ScaleType.FIT_XY);
         this.setAdjustViewBounds(false);
-        this.setPadding(0,0,0,0);
-        sePuedeColocar=true;
+        this.setPadding(0, 0, 0, 0);
+        sePuedeColocar = true;
+        tipoActual = Tipo.Vacio;
     }
 
-    public Celda putPosition(int x, int y){
-        this.pos_x =x;
-        this.pos_y =y;
+    public Celda putPosition(int x, int y) {
+        this.pos_x = x;
+        this.pos_y = y;
 
         return this;
     }
@@ -50,63 +52,197 @@ public class Celda extends androidx.appcompat.widget.AppCompatImageButton{
         this.pos_y = pos_y;
     }
 
-    public boolean comprobarColocacion(Barco barco){
-        boolean temp=true;
-        if(sePuedeColocar){
-            if (barco.getOrientacion()== Barco.Orientacion.vertical){
-                if(barco.getPos_y()>=Datos.getTableroJugador()[0].length-1)
-                    temp=false;
-                if(barco.getPos_y()>=Datos.getTableroJugador()[0].length-2)
-                    temp=false;
-                if(barco.getPos_y()>=Datos.getTableroJugador()[0].length-3)
-                    temp=false;
+    //Para Dani: Se vienen cositas en este método.
+    public boolean colocar(Barco barco, boolean isJugador) {
+        boolean temp = true;
+        List<Celda> celdas = new LinkedList<>();
+
+        if (sePuedeColocar) {
+            if (barco.getOrientacion() == Barco.Orientacion.vertical) {
+                if (barco.getCeldaInicio().getPos_x() < Datos.getBotonesColocar().length - 1) {
+                    if (isJugador) {
+                        if (!Datos.getBotonesColocar()[barco.getCeldaInicio().getPos_x() + 1][barco.getCeldaInicio().getPos_y()].sePuedeColocar)
+                            temp = false;
+                        else
+                            celdas.add(Datos.getBotonesColocar()[barco.getCeldaInicio().getPos_x() + 1][barco.getCeldaInicio().getPos_y()]);
+                    } else if (!Datos.getBotonesColocarIA()[barco.getCeldaInicio().getPos_x() + 1][barco.getCeldaInicio().getPos_y()].sePuedeColocar)
+                        temp = false;
+                    else
+                        celdas.add(Datos.getBotonesColocarIA()[barco.getCeldaInicio().getPos_x() + 1][barco.getCeldaInicio().getPos_y()]);
+                } else
+                    temp = false;
+
+                if (barco.getTipoBarco() == Barco.TipoBarco.t1x3)
+                    if (barco.getCeldaInicio().getPos_x() < Datos.getBotonesColocar().length - 2) {
+                        if (isJugador) {
+                            if (!Datos.getBotonesColocar()[barco.getCeldaInicio().getPos_x() + 2][barco.getCeldaInicio().getPos_y()].sePuedeColocar)
+                                temp = false;
+                            else
+                                celdas.add(Datos.getBotonesColocar()[barco.getCeldaInicio().getPos_x() + 2][barco.getCeldaInicio().getPos_y()]);
+                        } else if (!Datos.getBotonesColocarIA()[barco.getCeldaInicio().getPos_x() + 2][barco.getCeldaInicio().getPos_y()].sePuedeColocar)
+                            temp = false;
+                        else
+                            celdas.add(Datos.getBotonesColocarIA()[barco.getCeldaInicio().getPos_x() + 2][barco.getCeldaInicio().getPos_y()]);
+                    } else
+                        temp = false;
+
+                if (barco.getTipoBarco() == Barco.TipoBarco.t1x4)
+                    if (barco.getCeldaInicio().getPos_x() >= Datos.getBotonesColocar().length - 3) {
+                        if (isJugador) {
+                            if (!Datos.getBotonesColocar()[barco.getCeldaInicio().getPos_x() + 3][barco.getCeldaInicio().getPos_y()].sePuedeColocar)
+                                temp = false;
+                            else
+                                celdas.add(Datos.getBotonesColocar()[barco.getCeldaInicio().getPos_x() + 3][barco.getCeldaInicio().getPos_y()]);
+                        } else if (!Datos.getBotonesColocarIA()[barco.getCeldaInicio().getPos_x() + 3][barco.getCeldaInicio().getPos_y()].sePuedeColocar)
+                            temp = false;
+                        else
+                            celdas.add(Datos.getBotonesColocarIA()[barco.getCeldaInicio().getPos_x() + 3][barco.getCeldaInicio().getPos_y()]);
+                    } else
+                        temp = false;
+
+            } else {
+                if (barco.getCeldaInicio().getPos_y() < Datos.getBotonesColocar().length - 1) {
+                    if (isJugador) {
+                        if (!Datos.getBotonesColocar()[barco.getCeldaInicio().getPos_x()][barco.getCeldaInicio().getPos_y() + 1].sePuedeColocar)
+                            temp = false;
+                        else
+                            celdas.add(Datos.getBotonesColocar()[barco.getCeldaInicio().getPos_x()][barco.getCeldaInicio().getPos_y() + 1]);
+                    } else if (!Datos.getBotonesColocarIA()[barco.getCeldaInicio().getPos_x()][barco.getCeldaInicio().getPos_y() + 1].sePuedeColocar)
+                        temp = false;
+                    else
+                        celdas.add(Datos.getBotonesColocarIA()[barco.getCeldaInicio().getPos_x()][barco.getCeldaInicio().getPos_y() + 1]);
+                } else
+                    temp = false;
+
+                if (barco.getTipoBarco() == Barco.TipoBarco.t1x3)
+                    if (barco.getCeldaInicio().getPos_y() < Datos.getBotonesColocar().length - 2) {
+                        if (isJugador) {
+                            if (!Datos.getBotonesColocar()[barco.getCeldaInicio().getPos_x()][barco.getCeldaInicio().getPos_y() + 2].sePuedeColocar)
+                                temp = false;
+                            else
+                                celdas.add(Datos.getBotonesColocar()[barco.getCeldaInicio().getPos_x()][barco.getCeldaInicio().getPos_y() + 2]);
+                        } else if (!Datos.getBotonesColocarIA()[barco.getCeldaInicio().getPos_x()][barco.getCeldaInicio().getPos_y() + 2].sePuedeColocar)
+                            temp = false;
+                        else
+                            celdas.add(Datos.getBotonesColocarIA()[barco.getCeldaInicio().getPos_x()][barco.getCeldaInicio().getPos_y() + 2]);
+                    } else
+                        temp = false;
+
+                if (barco.getTipoBarco() == Barco.TipoBarco.t1x3)
+                    if (barco.getCeldaInicio().getPos_y() >= Datos.getBotonesColocar().length - 3) {
+                        if (isJugador) {
+                            if (!Datos.getBotonesColocar()[barco.getCeldaInicio().getPos_x()][barco.getCeldaInicio().getPos_y() + 3].sePuedeColocar)
+                                temp = false;
+                            else
+                                celdas.add(Datos.getBotonesColocar()[barco.getCeldaInicio().getPos_x()][barco.getCeldaInicio().getPos_y() + 3]);
+                        } else if (!Datos.getBotonesColocarIA()[barco.getCeldaInicio().getPos_x()][barco.getCeldaInicio().getPos_y() + 3].sePuedeColocar)
+                            temp = false;
+                        else
+                            celdas.add(Datos.getBotonesColocarIA()[barco.getCeldaInicio().getPos_x()][barco.getCeldaInicio().getPos_y() + 3]);
+                    } else
+                        temp = false;
             }
-            else{
-                if(barco.getPos_x()>=Datos.getTableroJugador().length-1)
-                    temp=false;
-                if(barco.getPos_x()>=Datos.getTableroJugador().length-2)
-                    temp=false;
-                if(barco.getPos_x()>=Datos.getTableroJugador().length-3)
-                    temp=false;
+        } else
+            temp = false;
+
+        if (temp) {
+            sePuedeColocar = false;
+            Iterator iterador = celdas.iterator();
+            while (iterador.hasNext()) {
+                Celda c = (Celda) iterador;
+                c.setSePuedeColocar(false);
+                barco.colocar(c);
             }
         }
-        else
-            temp=false;
 
         return temp;
     }
-    
-    enum Tipo{
-        Cruz, Seleccionado,
+
+    enum Tipo {
+        Cruz, Seleccionado, Vacio,
         Barco12_p1H, Barco12_p2H, Barco13_p1H, Barco13_p2H, Barco13_p3H, Barco14_p1H, Barco14_p2H, Barco14_p3H, Barco14_p4H,
         Barco12_p1V, Barco12_p2V, Barco13_p1V, Barco13_p2V, Barco13_p3V, Barco14_p1V, Barco14_p2V, Barco14_p3V, Barco14_p4V
-}
+    }
 
-    public void cambiaTipo(Tipo tipoNuevo){ // introduces un tipo nuevo, si es igual no hace nada. Si es distinto, cambia la imagen.
-        if(tipoActual == tipoNuevo) return;
-        tipoActual=tipoNuevo;
-        switch(tipoActual){
-            case Barco12_p1H: this.setImageResource(R.mipmap.barco12_p1); break;
-            case Barco12_p2H: this.setImageResource(R.mipmap.barco12_p2); break;
-            case Barco13_p1H: this.setImageResource(R.mipmap.barco13_p1); break;
-            case Barco13_p2H: this.setImageResource(R.mipmap.barco13_p2); break;
-            case Barco13_p3H: this.setImageResource(R.mipmap.barco13_p3); break;
-            case Barco14_p1H: this.setImageResource(R.mipmap.barco14_p1); break;
-            case Barco14_p2H: this.setImageResource(R.mipmap.barco14_p2); break;
-            case Barco14_p3H: this.setImageResource(R.mipmap.barco14_p3); break;
-            case Barco14_p4H: this.setImageResource(R.mipmap.barco14_p4); break;
-            case Barco12_p1V: this.setImageResource(R.mipmap.barco12_p1); break;
-            case Barco12_p2V: this.setImageResource(R.mipmap.barco12_p2); break;
-            case Barco13_p1V: this.setImageResource(R.mipmap.barco13_p1); break;
-            case Barco13_p2V: this.setImageResource(R.mipmap.barco13_p2); break;
-            case Barco13_p3V: this.setImageResource(R.mipmap.barco13_p3); break;
-            case Barco14_p1V: this.setImageResource(R.mipmap.barco14_p1); break;
-            case Barco14_p2V: this.setImageResource(R.mipmap.barco14_p2); break;
-            case Barco14_p3V: this.setImageResource(R.mipmap.barco14_p3); break;
-            case Barco14_p4V: this.setImageResource(R.mipmap.barco14_p4); break;
-            case Cruz: this.setImageResource(R.mipmap.cruz); break;
-            case Seleccionado: this.setImageResource(R.mipmap.seleccionado); break;
-            default: Log.e("Clase Celda","Hay un error en la función cambiaTipo");
+    public void cambiaTipo(Tipo tipoNuevo) { // introduces un tipo nuevo, si es igual no hace nada. Si es distinto, cambia la imagen.
+        if (tipoActual == tipoNuevo) return;
+        tipoActual = tipoNuevo;
+        switch (tipoActual) {
+            case Vacio:
+                this.setImageResource(R.drawable.vacio);
+                break;
+            case Barco12_p1H:
+                this.setImageResource(R.mipmap.barco12_p1);
+                break;
+            case Barco12_p2H:
+                this.setImageResource(R.mipmap.barco12_p2);
+                break;
+            case Barco13_p1H:
+                this.setImageResource(R.mipmap.barco13_p1);
+                break;
+            case Barco13_p2H:
+                this.setImageResource(R.mipmap.barco13_p2);
+                break;
+            case Barco13_p3H:
+                this.setImageResource(R.mipmap.barco13_p3);
+                break;
+            case Barco14_p1H:
+                this.setImageResource(R.mipmap.barco14_p1);
+                break;
+            case Barco14_p2H:
+                this.setImageResource(R.mipmap.barco14_p2);
+                break;
+            case Barco14_p3H:
+                this.setImageResource(R.mipmap.barco14_p3);
+                break;
+            case Barco14_p4H:
+                this.setImageResource(R.mipmap.barco14_p4);
+                break;
+            case Barco12_p1V:
+                this.setImageResource(R.mipmap.barco12_p1);
+                break;
+            case Barco12_p2V:
+                this.setImageResource(R.mipmap.barco12_p2);
+                break;
+            case Barco13_p1V:
+                this.setImageResource(R.mipmap.barco13_p1);
+                break;
+            case Barco13_p2V:
+                this.setImageResource(R.mipmap.barco13_p2);
+                break;
+            case Barco13_p3V:
+                this.setImageResource(R.mipmap.barco13_p3);
+                break;
+            case Barco14_p1V:
+                this.setImageResource(R.mipmap.barco14_p1);
+                break;
+            case Barco14_p2V:
+                this.setImageResource(R.mipmap.barco14_p2);
+                break;
+            case Barco14_p3V:
+                this.setImageResource(R.mipmap.barco14_p3);
+                break;
+            case Barco14_p4V:
+                this.setImageResource(R.mipmap.barco14_p4);
+                break;
+            case Cruz:
+                this.setImageResource(R.mipmap.cruz);
+                break;
+            case Seleccionado:
+                this.setImageResource(R.mipmap.seleccionado);
+                break;
+            default:
+                Log.e("Clase Celda", "Hay un error en la función cambiaTipo");
 
+        }
+    }
+
+    public boolean equals(Celda c){
+        boolean temp=false;
+        if(pos_x==c.getPos_x() && pos_y==c.getPos_y())
+            temp=true;
+
+        return temp;
+    }
 }
 
