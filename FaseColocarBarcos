@@ -1,1 +1,188 @@
+package com.example.battleship;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
+public class FaseColocarBarcos extends AppCompatActivity {
+    LinearLayout tableroColocarBarcos;
+    ImageButton barco2,barco3,barco4;
+    boolean barco12isClicked=false;
+    boolean barco13isClicked=false;
+    boolean barco14isClicked=false;
+    List<Barco> listaBarcos;
+    boolean isJugador;
+
+    @SuppressLint("MissingInflatedId")
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_fase_colocar_barcos);
+
+        Datos.generar();
+        Datos.colocarBarcosIA();
+        listaBarcos=Datos.getBarcosJugador();
+        isJugador=true;
+
+
+        tableroColocarBarcos=(LinearLayout) findViewById(R.id.tableroColocarBarcos);
+        for (int i=0;i<10;i++){
+            LinearLayout layoutAux=new LinearLayout(this);
+            layoutAux.setLayoutParams(new ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            ));
+            layoutAux.setOrientation(LinearLayout.HORIZONTAL);
+            for (int j=0;j<10;j++){
+                Celda celdaAux=new Celda(this).putPosition(i,j);
+                celdaAux.setLayoutParams(new ViewGroup.LayoutParams(
+                        100,
+                        100
+                ));
+
+                celdaAux.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        int indexBarco=getIndexBarco();
+
+                        if(indexBarco!=-1){
+                            if(celdaAux.colocar(listaBarcos.get(indexBarco),isJugador)) {
+                                listaBarcos.get(indexBarco).setColocado(true);
+                                barco12isClicked=false;
+                                barco13isClicked=false;
+                                barco14isClicked=false;
+                            }
+                        }
+                        else
+                            if(barco12isClicked)
+                                barco2.setEnabled(false);
+                            else if(barco13isClicked)
+                                barco3.setEnabled(false);
+                            else if(barco14isClicked)
+                                barco4.setEnabled(false);
+
+                        if(isTodosBarcosColocados()){
+                            Datos.Iniciar();
+                            startActivity(new Intent(FaseColocarBarcos.this,MainActivity.class));
+                            onStop();
+                        }
+                    }
+                });
+
+                layoutAux.addView(celdaAux);
+            }
+            tableroColocarBarcos.addView(layoutAux);
+        }
+
+        barco2=(ImageButton) findViewById(R.id.Barco2);
+        barco2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                barco12isClicked=true;
+                barco13isClicked=false;
+                barco14isClicked=false;
+            }
+        });
+        barco2.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                barco2.callOnClick();
+                int index=getIndexBarco();
+                if(index!=-1)
+                    listaBarcos.get(index).setOrientacion();
+                return false;
+            }
+        });
+
+        barco3=(ImageButton) findViewById(R.id.Barco3);
+        barco3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                barco12isClicked=false;
+                barco13isClicked=true;
+                barco14isClicked=false;
+            }
+        });
+        barco3.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                barco3.callOnClick();
+                int index=getIndexBarco();
+                if(index!=-1)
+                    listaBarcos.get(index).setOrientacion();
+                return false;
+            }
+        });
+
+        barco4=(ImageButton) findViewById(R.id.Barco4);
+        barco4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                barco12isClicked=false;
+                barco13isClicked=false;
+                barco14isClicked=true;
+            }
+        });
+        barco4.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                barco4.callOnClick();
+                int index=getIndexBarco();
+                if(index!=-1)
+                    listaBarcos.get(index).setOrientacion();
+                return false;
+            }
+        });
+    }
+    public int getIndexBarco(){
+        Iterator iterador=listaBarcos.iterator();
+        int index=-1;
+        boolean encontrado=false;
+
+        while(iterador.hasNext() && !encontrado){
+            Barco barco=(Barco)iterador.next();
+            if(barco12isClicked) {
+                if (barco.getTipoBarco() == Barco.TipoBarco.t1x2 && !barco.isColocado())
+                    encontrado=true;
+            }
+            else if(barco13isClicked){
+                if(barco.getTipoBarco()== Barco.TipoBarco.t1x3  && !barco.isColocado())
+                    encontrado=true;
+            }
+            else if(barco14isClicked) {
+                if (barco.getTipoBarco() == Barco.TipoBarco.t1x4  && !barco.isColocado())
+                    encontrado = true;
+            }
+            else
+                return -1;
+
+            index++;
+        }
+        if(!encontrado)
+            return -1;
+
+        return index;
+    }
+
+    public boolean isTodosBarcosColocados(){
+        Iterator iterador= listaBarcos.iterator();
+        while (iterador.hasNext()){
+            Barco barco=(Barco) iterador.next();
+            if(!barco.isColocado())
+                return false;
+        }
+        return true;
+    }
+}
