@@ -1,0 +1,72 @@
+//se llama MainActivity pero para diferenciar en el titulo
+package com.example.battleship;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+
+public class MainActivity extends AppCompatActivity {
+    LinearLayout linearLayoutIA;
+    LinearLayout linearLayoutJugador;
+    boolean isTurnoJugador;
+
+    @SuppressLint("MissingInflatedId")
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        isTurnoJugador=true;
+
+        linearLayoutIA=(LinearLayout) findViewById(R.id.verticalLayoutIA);
+        for (int i=0;i<Datos.getTableroIA().length;i++){
+            LinearLayout layoutAux=new LinearLayout(this);
+            layoutAux.setOrientation(LinearLayout.HORIZONTAL);
+            layoutAux.setLayoutParams(new ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            ));
+            for (int j=0;j<Datos.getTableroIA().length;j++){
+                Celda celda=Datos.getTableroIA()[i][j];
+                celda.cambiaTipo(Celda.Tipo.Vacio);
+
+                celda.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(!celda.isSePuedeColocar()){
+                            celda.setEnabled(false);
+                            celda.cambiaTipo(Celda.Tipo.Cruz);
+                            Datos.comprobarBarcoHundido(celda, true);
+                        }
+                        //TODO ACABAR
+
+                    }
+                });
+
+                layoutAux.addView(celda);
+            }
+            linearLayoutIA.addView(layoutAux);
+        }
+
+        linearLayoutJugador=findViewById(R.id.verticalLayoutJugador);
+        for (int i=0;i<Datos.getTableroJugador().length;i++){
+            LinearLayout layoutAux=new LinearLayout(this);
+            layoutAux.setOrientation(LinearLayout.HORIZONTAL);
+            layoutAux.setLayoutParams(new ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            ));
+            for (int j=0;j<Datos.getTableroJugador().length;j++){
+                Celda celda=Datos.getTableroJugador()[i][j];
+                celda.cambiaTipo(Celda.Tipo.Barco12_p1H);
+                layoutAux.addView(celda);
+                //TODO HACER EVENTOS ON CLICK PARA LA IA
+            }
+            linearLayoutJugador.addView(layoutAux);
+        }
+
+    }
+}
