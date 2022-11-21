@@ -1,36 +1,35 @@
 package com.example.battleship;
 
-import android.content.Context;
-
 import java.util.LinkedList;
 import java.util.List;
 
-public class Barco{
-    private int pos_x;
-    private int pos_y;
-    private List<Barco> vecinosBarco;
+public class Barco {
+    private Celda celdaInicio;
+    private List<Celda> casillasVecinas;
     private TipoBarco tipoBarco;
     private Orientacion orientacion;
-    private boolean golpeado;
+    private boolean isHundido;
     private boolean isColocado;
 
     public Barco(){
-        vecinosBarco=new LinkedList<>();
+        casillasVecinas=new LinkedList<>();
         orientacion=Orientacion.horizontal;
-        golpeado=false;
+        isHundido=false;
         isColocado=false;
     }
 
-    public Barco putPosition(int x, int y){
-        this.pos_x=x;
-        this.pos_y=y;
+    public Barco putPosition(Celda c){
+        celdaInicio=c;
         this.isColocado=true;
-
         return this;
     }
 
-    public List<Barco> getVecinosBarco() {
-        return vecinosBarco;
+    public Celda getCeldaInicio() {
+        return celdaInicio;
+    }
+
+    public List<Celda> getCasillasVecinas() {
+        return casillasVecinas;
     }
 
     public TipoBarco getTipoBarco() {
@@ -42,35 +41,15 @@ public class Barco{
     }
 
     public boolean isGolpeado() {
-        return golpeado;
+        return isHundido;
     }
 
     public boolean isColocado() {
         return isColocado;
     }
 
-    public int getPos_x() {
-        return pos_x;
-    }
-
-    public int getPos_y() {
-        return pos_y;
-    }
-
     enum TipoBarco{
         t1x2,t1x3,t1x4
-    }
-
-    public void setPos_x(int pos_x) {
-        this.pos_x = pos_x;
-    }
-
-    public void setPos_y(int pos_y) {
-        this.pos_y = pos_y;
-    }
-
-    public void setVecinosBarco(List<Barco> vecinosBarco) {
-        this.vecinosBarco = vecinosBarco;
     }
 
     public Barco setTipoBarco(TipoBarco tipoBarco) {
@@ -79,12 +58,8 @@ public class Barco{
         return this;
     }
 
-    public void setOrientacion(Orientacion orientacion) {
-        this.orientacion = orientacion;
-    }
-
-    public void setGolpeado(boolean golpeado) {
-        this.golpeado = golpeado;
+    public void setHundido() {
+        this.isHundido = true;
     }
 
     public void setColocado(boolean colocado) {
@@ -103,29 +78,7 @@ public class Barco{
             orientacion=Orientacion.horizontal;
     }
 
-    public void colocar(boolean jugador){
-
-        if(orientacion==Orientacion.horizontal) {
-            vecinosBarco.add(new Barco().putPosition(pos_x, pos_y + 1));
-            if(tipoBarco==TipoBarco.t1x3 || tipoBarco==TipoBarco.t1x4)
-                vecinosBarco.add(new Barco().putPosition(pos_x,pos_y+2));
-            if(tipoBarco==TipoBarco.t1x4)
-                vecinosBarco.add(new Barco().putPosition(pos_x,pos_y+3));
-        }
-
-        else {
-            vecinosBarco.add(new Barco().putPosition(pos_x + 1, pos_y));
-            if(tipoBarco==TipoBarco.t1x3 || tipoBarco==TipoBarco.t1x4)
-                vecinosBarco.add(new Barco().putPosition(pos_x+2,pos_y));
-            if(tipoBarco==TipoBarco.t1x4)
-                vecinosBarco.add(new Barco().putPosition(pos_x+3,pos_y));
-        }
-        vecinosBarco.add(this);
-
-        if(jugador)
-            Datos.colocarBarcosJugador(vecinosBarco);
-        else
-            Datos.colocarBarcosIA(vecinosBarco);
-
+    public void colocar(Celda c){
+        casillasVecinas.add(c);
     }
 }
